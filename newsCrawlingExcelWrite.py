@@ -1,5 +1,30 @@
 import xlsxwriter as xw
 
+class WriteData:
+    def __init__(self, path):
+        self.__wb__ = xw.Workbook(path)
+    
+    def writeData(self, data, sheetname, title, header=None):
+        ws = self.__wb__.add_worksheet(sheetname)
+        if header:
+            ws.write_row(0,0,header)
+        
+        for n,d in enumerate(data):
+            ws.write_column(1,n,d)
+            
+        print("작업이 끝났습니다")
+        
+    def close(self):
+        self.__wb__.close()
+        
+obj = WriteData(r"Exercise Excel.xlsx")
+news = DaumNews("날씨")
+temp_data = news.getNews(1,2)
+
+obj.writeData(temp_data, "날씨", ["제목", "링크", "내용"])
+obj.close()
+
+'''
 title_list=[]
 href_list = []
 content_list = []
@@ -21,9 +46,11 @@ ws = wb.add_worksheet("sheet 1")
 
 ws.write_row(0,0,['번호','제목','링크','내용'])
 '''
+'''
 ws.write(0,0,'제목')
 ws.write(0,1,'링크')
 ws.write(0,2,'내용')
+'''
 '''
 ws.write_column(1,0, list(range(1,len(title_list)+1)))
 ws.write_column(1,1,title_list)
@@ -32,3 +59,4 @@ ws.write_column(1,3,content_list)
 
 
 wb.close()   ## ws.close가 아니다.
+'''
