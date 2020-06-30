@@ -1,3 +1,6 @@
+import requests
+import bs4
+
 class DaumNews:
     def __init__(self, title, page1=1, page2=1):
         self.__url__ = 'https://search.daum.net/search?w=news&sort=recency&q={}&cluster=n&DA=STC&dc=STC&pg=1&r=1&p={}&rc=1&at=more&sd=&ed=&period='
