@@ -8,3 +8,10 @@
       
     > lst[::2]
       - 리스트 처음부터 2개
+
+## Module
+
+    > import random
+    
+    > random.choice
+        - # list에서 random하게 하나 뽑아줌
