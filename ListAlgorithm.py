@@ -1,7 +1,5 @@
-data = [1,2,5,6,43]
-res = []
-i=0
-index = 0
+data = [ 1,2,5,6,43 ]
+i = 0
 length = len(data)
 
 usr = int(input("그만하고 싶으면 0, 검색은 -를 눌러주세요"))
@@ -17,14 +15,14 @@ while(True):
             break
         else:   
             while ( i < length):
-                if(data[i] == usr):
+                if (data[i] == usr):
                     print('repeated num')
                     break
-                elif(data[i] > usr):
+                elif (data[i] > usr):
                     data.insert(i, usr)
                     break
                 else:
-                    if(i == length-1):
+                    if (i == length-1):
                         data.append(usr)
                         break
                 i = i+1
