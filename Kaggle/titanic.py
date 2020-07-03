@@ -95,7 +95,7 @@ total['Family'] = total['Family'].map(family_map)
 
 
 # 이름 바꿔주기
-total['Status'] = total['Name'].apply(lambda x:x.split(' ')[1])
+total['Status'] = total['Name'].apply(lambda x:x.split(',')[1].split('.')[0].strip())
 total['Status'].unique()
 total['Status'].value_counts()
     # 이를 봤을 때 Mr, Miss, Mrs, Master, Other로 Status를 분류할 수 있다.
@@ -154,6 +154,22 @@ total['Age_chng'] = total['Age'].apply(temp)
 total['Age_chng']
 #################################################################
 
+######### test와 train set 분리하기 #############################
+total.isna().sum()
+total_train = total.dropna()
+total_test = total[total['Survived'].isna()]
 
+##############################################################
 
+################# 머신러닝 돌리기 #############################
+from sklearn import neighbors
 
+knn_model = neighbors.KNeighborsClassifier(n_neighbors = 10) # 모델 불러오기
+target = total_train['Survived'] # 우리가 목표로 하는 타겟
+
+temp_f = total_train[['Family', 'Age_chng', 'Status', 'Embarked', 'Sex_1', 'Pclass']]
+features = pd.get_dummies(temp_f , columns = ['Family', 'Age_chng', 'Status', 'Embarked', 'Sex_1', 'Pclass'], drop_first = True)
+temp_f = total_test[['Family', 'Age_chng', 'Status', 'Embarked', 'Sex_1', 'Pclass']]
+test_features = pd.get_dummies(temp_f , columns = ['Family', 'Age_chng', 'Status', 'Embarked', 'Sex_1', 'Pclass'], drop_first = True)
+
+knn_model.fit(features, target)
