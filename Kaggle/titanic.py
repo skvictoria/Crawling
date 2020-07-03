@@ -61,13 +61,13 @@ total.loc[ (total['Age'].isna() )& (total['Sex']=='male') & (total['Pclass']==1)
 total.loc[ (total['Age'].isna() )& (total['Sex']=='male') & (total['Pclass']==2),'Age'] = 30.815380
 total.loc[ (total['Age'].isna() )& (total['Sex']=='male') & (total['Pclass']==3),'Age'] = 25.962264
 
-## 결측값 많은 'Cabin'은 없애버리기
-del total['Cabin']
+del total['Cabin'] # 결측값 많은 'Cabin'은 없애버리기
+del total['Ticket'] # 티켓은 안쓰니까 없애버리기
 ###############################################################################################
 
 
-############################## 머신러닝에 넣을 수 있도록 모든 데이터를 숫자로 바꿔주기 #########
-
+############################## 머신러닝에 넣을 수 있도록 모든 데이터를 숫자로 바꿔주기 (One-Hot Encoding) #########
+'''
 def temp(x):
     if x =='male':
         return 0
@@ -75,18 +75,85 @@ def temp(x):
         return 1
     
 total['Sex'] = total['Sex'].apply(temp)
-
-del total['Ticket']
+'''
+total['Sex_1'] = total['Sex'].apply(lambda x :1 if x =='male' else 0) # 앞에꺼 왜 안되는지 모르겠는데 이렇게 해야 됐었음.
 
 ################################################################################################
 
 
 ###################### 유효한 데이터로 만들어주기 #####################
+# 가족들은 묶어주기
 total['Family'] = total['SibSp']+total['Parch']
 
+# 가족들에 대해 살펴보자.
+total.groupby(['Family']).mean() # 혼자 탔을때는 생존률 적은데 가족이 조금 있을때는 생존률 높다. 너무 많으면 생존률 낮다.
+sns.countplot(data = total, x = 'Family', hue = 'Survived') # 더 잘 보이게 그래프로 볼 수 있음
+
+# 따라서 맵을 만들어준다. 우리는 Alone, Small, Big로 분류하였다.
+family_map = {0:'Alone', 1:'Small', 2:'Small', 3:'Small', 4:'Big', 5:'Big', 6:'Big', 7:'Big', 10:'Big'}
+total['Family'] = total['Family'].map(family_map)
+
+
+# 이름 바꿔주기
 total['Status'] = total['Name'].apply(lambda x:x.split(' ')[1])
 total['Status'].unique()
 total['Status'].value_counts()
-# 이를 봤을 때 Mr, Miss, Mrs, Master, Other로 Status를 분류할 수 있다.
+    # 이를 봤을 때 Mr, Miss, Mrs, Master, Other로 Status를 분류할 수 있다.
+temp_map = {'Mr':'Mr', 'Mrs':'Mrs', 'Miss':'Miss', 'Master':'Master', 'Don':'Others', 'Rev':'Others', 'Dr':'Others', 'Mme':'Mrs', 'Ms':'Miss',
+       'Major':'Others', 'Lady':'Others', 'Sir':'Others', 'Mlle':'Miss', 'Col':'Others', 'Capt':'Others', 'the Countess':'Others',
+       'Jonkheer':'Others', 'Dona':'Others'}
 
+total['Status'] = total['Status'].map(temp_map)
+total['Status'].value_counts()
+
+
+# 나이 바꿔주기 -> 문제점: 나이 범위가 너무 커서 거리를 구하거나 할 때 거리가 크게 나온다. 그래서 이걸 정규화시켜주거나 / 가족들 데이터 바꿔준 것처럼 index를 바꿔줄 필요가 있다.
+sns.distplot(total['Age'])
+    # 정규화 시켜주는 방법
+sns.distplot((total['Age']-total['Age'].mean())/total['Age'].std()) # 우리가 많이 쓰는 의미의 정규화
+sns.distplot((total['Age']-total['Age'].min())/(total['Age'].max()-total['Age'].min())) # 최대와 최소를 가져와서 쓰는 정규화
+
+    # index를 바꿔주는 방법
+sns.distplot(total[total['Survived']==1]['Age'])
+sns.distplot(total[total['Survived']==0]['Age'])
+
+plt.xlim([0,17]) # 0에서 17까지
+plt.show()
+
+sns.distplot(total[total['Survived']==1]['Age'])
+sns.distplot(total[total['Survived']==0]['Age'])
+
+plt.xlim([17,31]) # 17에서 31까지
+plt.show()
+
+sns.distplot(total[total['Survived']==1]['Age'])
+sns.distplot(total[total['Survived']==0]['Age'])
+
+plt.xlim([31,57]) # 31에서 57까지
+plt.show()
+
+sns.distplot(total[total['Survived']==1]['Age'])
+sns.distplot(total[total['Survived']==0]['Age'])
+
+plt.xlim([57,80]) # 57에서 80까지
+plt.show()
+
+# 앞에서 나이를 4개의 구간으로 나눌 수 있다는 것을 살펴보았다.
+def temp(x):
+    if x<17:
+        return 'baby'
+    elif x<31:
+        return 'young'
+    elif x<57:
+        return 'midage'
+    else:
+        return 'old'
+
+# 이를 적용해준다.    
+total['Age_chng'] = total['Age'].apply(temp)
+total['Age_chng']
 #################################################################
+
+
+
+
