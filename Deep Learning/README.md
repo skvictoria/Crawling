@@ -17,4 +17,11 @@
   - 모델의 추론 결과와 실제 정답 간 차이
   - 대표적인 예 : Mean Square Error -> 작은 것은 더 작게, 큰 것은 더 크게
   
-- Backpropagation
+- Propagation
+  - Forward Propagation
+  - Back Propagation
+    - 특정 edge가 특정 edge에 미치는 영향도 계산 - chain rule 사용
+
+- Gradient Descent
+  - 학습률을 지정해준다.
+  - ex. Adam, Adagrad...
