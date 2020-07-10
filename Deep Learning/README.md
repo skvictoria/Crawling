@@ -37,15 +37,18 @@
 - 머신러닝 종류 - 지도학습, 비지도, 강화
 - 지도학습 - 회귀분석, 분류분석
 
-딥러닝 - 최적화 과정(학습과정)
+> 딥러닝 - 최적화 과정(학습과정)
 1. 데이터가 설계한 모델에 들어감
 2. activation(weight * x + bias)
-3. 손실함수 = (y hat(예측값)-정답값), 특정한 weight가 손실함수까지 거쳤던 과정을 계산그래프로 그림
+3. 손실함수 = MSE(y hat(예측값)-정답값), 특정한 weight가 손실함수까지 거쳤던 과정을 계산그래프로 그림
 4. 오차역전파법은 미분을 구하는 것. 경사하강법 같은 Optimizer
 
 > 퍼셉트론 - weight, bias, activation function으로 구성
+
 > weight : perceptron이 detection하고자하는 영향을 조절
+
 > bias: 임계값 조절
+
 > activation : perceptron이 비선형성을 갖출 수 있도록
   - step function
   - sigmoid(오차역전파법 전파)
@@ -53,7 +56,7 @@
 
 > tensorflow(로레벨로 코딩)를 backend로 한 keras(이미 만들어져 있는 layer 추가해서..)
 
-1. dnn(fully connected layer 여러개 연결)
-2. cnn
-3. serial data 처리에 특화되어있는 rnn 모델
-cnn 장점 : 필터정보들을 이미지(시각화)해서 각각의 필터들이 이미지에 어떻게 반응했는가를 볼 수 있음.
+- 1. dnn(fully connected layer 여러개 연결)
+- 2. cnn
+- 3. serial data 처리에 특화되어있는 rnn 모델
+> cnn 장점 : 필터정보들을 이미지(시각화)해서 각각의 필터들이 이미지에 어떻게 반응했는가를 볼 수 있음.
