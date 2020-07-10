@@ -39,20 +39,19 @@
 
 딥러닝 - 최적화 과정(학습과정)
 1. 데이터가 설계한 모델에 들어감
-2. weight 곱해짐, 다 더하고 bias더하고 activation에 집어넣고 /
-최종적으로 y hat(예측값)-정답값으로 손실함수의 값과 특정한 weight가 손실함수까지 거쳤던 과정을 계산그래프로 그리고
+2. activation(weight * x + bias)
+3. 손실함수 = (y hat(예측값)-정답값), 특정한 weight가 손실함수까지 거쳤던 과정을 계산그래프로 그림
+4. 오차역전파법은 미분을 구하는 것. 경사하강법 같은 Optimizer
 
-오차역전파법은 미분을 구하는 것. 경사하강법 같은 optimizer
+> 퍼셉트론 - weight, bias, activation function으로 구성
+> weight : perceptron이 detection하고자하는 영향을 조절
+> bias: 임계값 조절
+> activation : perceptron이 비선형성을 갖출 수 있도록
+  - step function
+  - sigmoid(오차역전파법 전파)
+  - relu
 
-퍼셉트론 - weight, bias, activation function
-weight : perceptron이 detection하고자하는 영향을 조절
-bias: 임계값 조절
-activation : perceptron이 비선형성을 갖출 수 있도록
-- step function
-- sigmoid(오차역전파법 전파)
-- relu
-
-tensorflow(로레벨로 코딩)를 backend로 한 keras(이미 만들어져 있는 layer 추가해서..)
+> tensorflow(로레벨로 코딩)를 backend로 한 keras(이미 만들어져 있는 layer 추가해서..)
 
 1. dnn(fully connected layer 여러개 연결)
 2. cnn
