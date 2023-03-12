@@ -1,3 +1,10 @@
+# The utilities for data preprocessing
+- data analytics (using kaggle)
+- macro
+- crawling
+- curation
+
+
 pandas
 시리즈(1차원) - 인덱스, 데이터
 데이터프레임
