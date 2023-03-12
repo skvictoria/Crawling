@@ -3,18 +3,28 @@
 - macro
 - crawling
 - curation
+- algorithm using pandas dataframe
 
 
-pandas
-시리즈(1차원) - 인덱스, 데이터
-데이터프레임
+## Data Slicing
 
-컬럼이름으로 고른 다음->인덱스로 고름 train['Embarked'][0]
-.loc를 보면 행(index)부터 보고 -> 컬럼으로 고름 train.loc[0, 'Embarked']
+    > lst[:4]
+      - 0부터 3까지 슬라이싱
+      
+    > lst[:]
+      - 리스트 전체 슬라이싱
+      
+    > lst[::2]
+      - 리스트 처음부터 2개
 
-자료구조에서 데이터 갖고올때는 꺽쇠모양
+## Module
 
-concat 시 list로 묶어서 데이터들을 넣어줌. 입력값 하나임
+    > import random
+    
+    > random.choice
+        - # list에서 random하게 하나 뽑아줌
+
+
 
 ## 탐색적 데이터 분석
 
